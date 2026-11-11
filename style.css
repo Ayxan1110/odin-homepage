@@ -1,0 +1,565 @@
+/* ---------- Colours (custom properties) ---------- */
+:root {
+  --ink: #14161c;          /* near-black: dark sections, text on light */
+  --ink-soft: #1f232c;     /* card background on the dark section */
+  --paper: #f6f0e4;        /* warm off-white page background */
+  --text: #1c1e24;
+  --muted: #474b56;        /* secondary text on paper (contrast 8:1) */
+  --muted-light: #b9bdc9;  /* secondary text on ink (contrast 9:1) */
+  --accent: #c2410c;       /* burnt orange, only used as text/lines on paper */
+  --accent-bright: #ff8a4c; /* basketball orange, for dark backgrounds */
+  --ball: #f26a21;
+
+  --radius: 16px;
+  --font-heading: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ---------- Reset and base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* so the sticky header does not cover the section title after a jump */
+  scroll-padding-top: 72px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--paper);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto; /* with width/height attributes: no layout jump while loading */
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  line-height: 1.1;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+/* centred column that never gets wider than 1120px */
+.container {
+  width: min(100% - 2rem, 1120px);
+  margin-inline: auto;
+}
+
+/* ---------- Accessibility helpers ---------- */
+/* a clear outline for keyboard users, on every link */
+a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* on dark / orange backgrounds the outline needs another colour */
+.work a:focus-visible,
+.contact a:focus-visible {
+  outline-color: #fff;
+}
+
+/* text for screen readers only */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 20;
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 8px 8px;
+  background-color: var(--ink);
+  color: #fff;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: rgba(246, 240, 228, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(20, 22, 28, 0.12);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 64px;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.logo:hover {
+  background-color: var(--ball);
+  color: var(--ink);
+  transform: rotate(-6deg);
+}
+
+.nav-list {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav-list a {
+  display: block;
+  padding: 0.5rem 0.65rem; /* big enough to tap on a phone */
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  /* the orange underline grows from the left on hover */
+  background: linear-gradient(var(--accent), var(--accent)) left 85% / 0 2px no-repeat;
+  transition: background-size 0.25s ease;
+}
+
+.nav-list a:hover {
+  background-size: 100% 2px;
+}
+
+/* ---------- Hero / about ---------- */
+.hero {
+  padding: 2.5rem 0 3.5rem;
+}
+
+/* mobile: one column, portrait on top, text below */
+.hero-inner {
+  display: grid;
+  gap: 2rem;
+  justify-items: start;
+}
+
+.portrait {
+  width: 140px;
+}
+
+.portrait-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.4s ease;
+}
+
+.portrait:hover .portrait-svg {
+  transform: rotate(12deg) scale(1.04);
+}
+
+/* parts of the SVG are styled from the stylesheet */
+.ball {
+  fill: var(--ball);
+  stroke: var(--ink);
+  stroke-width: 4;
+}
+
+.seams path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.initials-bg {
+  fill: var(--ink);
+}
+
+.initials {
+  fill: var(--paper);
+  font-family: var(--font-heading);
+  font-size: 44px;
+  font-weight: 800;
+}
+
+.eyebrow {
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  /* fluid size: 2.6rem on phones up to 4.6rem on large screens */
+  font-size: clamp(2.6rem, 8vw + 0.5rem, 4.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* marker-style highlight behind the name */
+.highlight {
+  background: linear-gradient(transparent 62%, rgba(255, 138, 76, 0.65) 62%);
+}
+
+.lead {
+  max-width: 38rem;
+  margin-top: 1.25rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.facts li {
+  padding: 0.3rem 0.85rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ---------- Buttons (social links) ---------- */
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.2rem;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 0 rgba(20, 22, 28, 0.25);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-dark {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--ink);
+}
+
+.btn-outline:hover {
+  background-color: #fff;
+}
+
+.btn-light {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* ---------- My work ---------- */
+.work {
+  padding: 4rem 0;
+  background-color: var(--ink);
+  color: #fff;
+}
+
+.work h2,
+.contact h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.section-intro {
+  max-width: 36rem;
+  margin-top: 0.75rem;
+  color: var(--muted-light);
+}
+
+/* Natural responsiveness: as many columns of at least 280px as fit.
+   No media query needed: 1 column on phones, 2 on tablets, 3 on desktop. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* clips the image when it zooms on hover */
+  border-radius: var(--radius);
+  background-color: var(--ink-soft);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 1.4rem;
+}
+
+.card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.card-body p {
+  margin-top: 0.5rem;
+  color: var(--muted-light);
+  font-size: 0.95rem;
+}
+
+.card-links {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: auto; /* pushes the links to the bottom so all cards line up */
+  padding-top: 1.1rem;
+}
+
+.card-links a {
+  padding: 0.25rem 0; /* taller tap area */
+  color: var(--accent-bright);
+  font-weight: 600;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.card-links a:hover {
+  color: #fff;
+}
+
+/* lift the card and zoom the screenshot on hover,
+   and do the same when a link inside is focused with the keyboard */
+.card:hover,
+.card:focus-within {
+  transform: translateY(-6px);
+  border-color: var(--accent-bright);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+
+.card:hover img,
+.card:focus-within img {
+  transform: scale(1.05);
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  padding: 4rem 0;
+  background-color: var(--accent-bright);
+  color: var(--ink);
+}
+
+.contact-inner {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.contact p {
+  max-width: 32rem;
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.contact .social {
+  margin-top: 0;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  padding: 1.5rem 0;
+  background-color: var(--ink);
+  color: var(--muted-light);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ---------- Media queries (mobile first: styles above are for phones) ---------- */
+
+/* Tablet and up */
+@media (min-width: 640px) {
+  .container {
+    width: min(100% - 4rem, 1120px);
+  }
+
+  .hero {
+    padding: 4rem 0 5rem;
+  }
+
+  .portrait {
+    width: 180px;
+  }
+
+  .work,
+  .contact {
+    padding: 5rem 0;
+  }
+
+  .nav-list {
+    gap: 1rem;
+  }
+
+  .nav-list a {
+    font-size: 1rem;
+  }
+}
+
+/* Desktop: hero becomes two columns (text left, portrait right) */
+@media (min-width: 960px) {
+  .hero {
+    padding: 6rem 0 7rem;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr 340px;
+    align-items: center;
+    gap: 4rem;
+    justify-items: stretch;
+  }
+
+  /* source order stays portrait first (better for the small screens),
+     here we swap it to the right with grid placement */
+  .portrait {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .hero-text {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* contact: text on the left, buttons on the right */
+  .contact-inner {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .contact .social {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact .btn {
+    justify-content: center;
+  }
+}
+
+/* ---------- Animation ---------- */
+/* hero text and portrait fade in and slide up once on page load */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-text,
+.portrait {
+  animation: fade-up 0.7s ease both;
+}
+
+.hero-text {
+  animation-delay: 0.1s;
+}
+
+/* Reduced motion: people who ask their system for less motion get no
+   animation, no sliding and no zooming. Everything is still visible. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .card:hover,
+  .card:focus-within,
+  .card:hover img,
+  .card:focus-within img,
+  .btn:hover,
+  .logo:hover,
+  .portrait:hover .portrait-svg {
+    transform: none;
+  }
+}
